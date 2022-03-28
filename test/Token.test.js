@@ -1,17 +1,18 @@
-// const { iteratee } = require("lodash")
-// const { contracts_build_directory } = require("../truffle-config")
+import { tokens } from './helpers'
 
-const Token = artifacts.require('/home/bob/code/ethereum_solidity_bootcamp/blockchain-developer-bootcamp/src/contracts/Token.sol')
+const Token = artifacts.require('./Token.sol')
+// const Token = artifacts.require('/home/bob/code/ethereum_solidity_bootcamp/blockchain-developer-bootcamp/src/contracts/Token.sol')
 
 require('chai')
     .use(require('chai-as-promised'))
     .should()
 
-contract('Token', (accounts) => {
+contract('Token', ([deployer,receiver]) => {
     const name = 'Pavva Token'
     const symbol = 'PAV'
     const decimals = '18'
-    const totalSupply = '1000000000000000000000000'
+    // const totalSupply = '1000000000000000000000000'
+    const totalSupply = tokens(1000000).toString()
 
     let token
 
@@ -38,7 +39,30 @@ contract('Token', (accounts) => {
 
         it('tracks the totalSupply', async () => {
             const result = await token.totalSupply()
-            result.toString().should.equal(totalSupply)
+            result.toString().should.equal(totalSupply.toString())
+        })
+
+        it('assigns the total supply to the deployer', async () => {
+            const result = await token.balanceOf(deployer)
+            result.toString().should.equal(totalSupply.toString())
+        })
+    })
+
+    describe('sending tokens', () => {
+        it('tracks token balances', async () => {
+            let balanceOf
+            balanceOf = await token.balanceOf(deployer)
+            console.log("deployer balance before transfer", balanceOf.toString())
+            balanceOf = await token.balanceOf(receiver)
+            console.log("receiver balance before transfer", balanceOf.toString())
+
+            await token.transfer(receiver, tokens(100), { from: deployer})
+            // await token.transfer(receiver, '100000000000000000000', { from: deployer})
+
+            balanceOf = await token.balanceOf(deployer)
+            console.log("deployer balance after transfer", balanceOf.toString())
+            balanceOf = await token.balanceOf(receiver)
+            console.log("receiver balance after transfer", balanceOf.toString())
         })
     })
 

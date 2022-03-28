@@ -18,7 +18,7 @@
     "babel-preset-stage-3": "6.24.1",
     "babel-register": "6.26.0",
     "bootstrap": "4.5.2",
-    "chai": "4.2.0",
+    "chai": "^4.2.0",
     "chai-as-promised": "7.1.1",
     "chai-bignumber": "3.0.0",
     "dotenv": "8.2.0",
@@ -38,7 +38,8 @@
     "truffle": "5.1.45",
     "truffle-flattener": "1.5.0",
     "truffle-hdwallet-provider-privkey": "0.3.0",
-    "web3": "1.2.6"
+    "web3": "1.2.6",
+    "web3-utils": "^1.7.1"
   },
   "scripts": {
     "start": "react-scripts start",
