@@ -69,3 +69,11 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
 # solidity-bootcamp
+Test Suite:
+- Solidity: Truffle Suite https://trufflesuite.com/
+- JS: Mocha js https://mochajs.org/
+- JS Assertions: Chai.js https://www.chaijs.com/
+
+ERC 20 Token: https://github.com/ethereum/EIPs/blob/master/EIPS/eip-20.md
+
+Smart Contract Library: https://github.com/OpenZeppelin/openzeppelin-contracts
