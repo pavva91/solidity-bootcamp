@@ -49,20 +49,24 @@ contract('Token', ([deployer,receiver]) => {
     })
 
     describe('sending tokens', () => {
+        let result
+        let amount
+        
+        beforeEach(async () => {
+            // Transfer Token
+            amount = tokens(100)
+            result = await token.transfer(receiver, amount, { from: deployer})
+
+        })
+
         it('tracks token balances', async () => {
             let balanceOf
-            balanceOf = await token.balanceOf(deployer)
-            console.log("deployer balance before transfer", balanceOf.toString())
-            balanceOf = await token.balanceOf(receiver)
-            console.log("receiver balance before transfer", balanceOf.toString())
-
-            await token.transfer(receiver, tokens(100), { from: deployer})
-            // await token.transfer(receiver, '100000000000000000000', { from: deployer})
 
             balanceOf = await token.balanceOf(deployer)
-            console.log("deployer balance after transfer", balanceOf.toString())
+            balanceOf.toString().should.equal(tokens(999900).toString())
+
             balanceOf = await token.balanceOf(receiver)
-            console.log("receiver balance after transfer", balanceOf.toString())
+            balanceOf.toString().should.equal(tokens(100).toString())
         })
     })
 
