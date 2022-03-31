@@ -10,12 +10,14 @@ contract Token {
     string public symbol = "PAV";
     uint256 public decimals = 18;
     uint256 public totalSupply;
+    // Track balances
+    mapping(address => uint256) public balanceOf;
+
+    mapping(address => mapping(address => uint256)) public allowance;
 
     // Events
     event Transfer(address indexed from, address indexed to, uint256 value);
-
-    // Track balances
-    mapping(address => uint256) public balanceOf;
+    event Approval(address indexed _owner, address indexed _spender, uint256 _value);
 
     constructor() public {
         totalSupply = 1000000 * (10 ** decimals);
@@ -31,4 +33,13 @@ contract Token {
         emit Transfer(msg.sender, _to, _value);
         return true;
     }
+
+    // Approve tokens
+    function approve(address _spender, uint256 _value) public returns (bool success) {
+        allowance[msg.sender][_spender] = _value;
+        emit Approval(msg.sender, _spender, _value);
+        return true;
+    }
+
+    // Transfer from
 }   
