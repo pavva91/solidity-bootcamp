@@ -31,6 +31,7 @@ contract Token {
         return true;
     }
 
+    // Convention: Internal functions start with uderscore "_"
     function _transfer(address _from, address _to, uint256 _value) internal {
         require(_to != address(0));
         balanceOf[_from] = balanceOf[_from].sub(_value);
@@ -48,7 +49,10 @@ contract Token {
 
     // Transfer from
     function transferFrom(address _from, address _to, uint256 _value) public returns (bool success){
-
+        require(_value <= balanceOf[_from]);
+        require(_value <= allowance[_from][msg.sender]);
+        allowance[_from][msg.sender] = allowance[_from][msg.sender].sub(_value);
+        _transfer(_from, _to, _value);
         return true;
     }
 }   
